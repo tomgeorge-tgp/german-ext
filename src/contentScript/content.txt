@@ -1,0 +1,446 @@
+var Email = "";
+window.onload = (event) => {
+  chrome.runtime.sendMessage({ message: "getLoginEmail" });
+  console.log("page is fully loaded");
+
+
+
+  // setTimeout(checkInputFields, 10000);
+  // const allButtons = document.querySelectorAll("button");
+
+  // // Add event listeners to all buttons
+  // allButtons.forEach((button) => {
+  //   button.addEventListener("click", handleButtonClick);
+  // });
+
+  // // Find all input elements on the page
+  // const allInputs = document.querySelectorAll("input");
+
+  // // Add event listeners to all input elements for changes
+  // allInputs.forEach((input) => {
+  //   input.addEventListener("input", handleInputChange);
+  //   // 'input' event triggers when the input value changes (on every keystroke)
+  //   // You can also use 'change' event for detecting when the input loses focus after changing
+  // });
+};
+
+document.addEventListener('mousedown', function(event){
+  console.log("event", event);
+  if(event.button === 2) { // Right mouse button
+     const lastClickedElement = event.target;
+      console.log('lastClickedElement', lastClickedElement);
+  }
+}, true);
+
+
+
+
+// Function to handle button clicks
+function handleButtonClick(event) {
+  // Your code to handle button clicks
+  console.log("Button clicked!", event.target);
+  // Perform other actions as needed
+}
+
+// Add event listeners to all button elements on the page
+const allButtons = document.querySelectorAll("button");
+allButtons.forEach((button) => {
+  button.addEventListener("click", handleButtonClick);
+});
+
+// Function to be called when an input value changes
+function handleInputChange(event) {
+  // Your code to handle input changes
+  console.log("Input value changed:", event.target.value);
+  // Perform other actions as needed
+}
+
+// Find all button elements on the page
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.email) {
+    // Handle the received email ID
+    Email = request.email;
+    console.log("Received email ID:", request.email);
+
+    // checkInputFields();
+  }
+});
+
+function checkInputFields() {
+  console.log("to fetch");
+  const inputFields = document.querySelectorAll("input");
+  // inputFields.forEach((divElement) => {
+  //   divElement.style.backgroundColor = 'green';
+  // });
+  // const inputFields = document.querySelectorAll('div[data-automation-id] input[type="text"], div[data-automation-id] input[type="checkbox"], div[data-automation-id] input[type="radio"]');
+  console.log("inputFields", inputFields);
+  if (inputFields.length > 0 && Email.length > 0) {
+    console.log("to fetch", Email);
+    const url = "http://localhost:5000/api/details/extension/" + Email;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Process the data received from the backend
+        console.log(data);
+
+        fillDetails(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data from the backend", error);
+      });
+  }
+}
+// checkInputFields();
+var personDetails = {
+  name: "Amal Jose Vallavanthara",
+  firstname: "Amal",
+  middlename: "Jose",
+  lastname: "Vallavanthara",
+  location: "Germany",
+  address: "Kahlhieb 2",
+  city: "Stuttgart",
+  postcode: 70499,
+  email: "emailUser",
+  phone: "017632634505",
+  code: "+49",
+  password: "Hello123@",
+  gender: "Male",
+};
+var mapDetails = {
+  name: "name",
+  fullName: "name",
+  full_name: "name",
+  givenName: "name",
+  given_name: "name",
+  userName: "name",
+  user_name: "name",
+  displayName: "name",
+  display_name: "name",
+
+  fname: "firstname",
+  firstName: "firstname",
+  "in-firstName": "firstname",
+  first_name: "firstname",
+  "First Name": "firstname",
+  First_Name: "firstname",
+  FirstName: "firstname",
+  f_name: "firstname",
+  firstname: "firstname",
+  "first-name": "firstname",
+
+  lname: "lastname",
+  lastName: "lastname",
+  last_name: "lastname",
+  "Last Name": "lastname",
+  Last_Name: "lastname",
+  LastName: "lastname",
+  l_name: "lastname",
+  family_name: "lastname",
+  familyName: "lastname",
+  sur_name: "lastname",
+  "sur-name": "lastname",
+  surName: "lastname",
+  lastname: "lastname",
+  "last-name": "lastname",
+
+  mname: "middlename",
+  middleName: "middlename",
+  middle_name: "middlename",
+  "Middle Name": "middlename",
+  Middle_Name: "middlename",
+  MiddleName: "middlename",
+  m_name: "middlename",
+  second_name: "middlename",
+  secondName: "middlename",
+  mid_name: "middlename",
+  "mid-name": "middlename",
+  midName: "middlename",
+  middlename: "middlename",
+  "middle-name": "middlename",
+
+  location: "location",
+  loc: "location",
+  place: "address",
+  area: "address",
+  city: "city",
+  town: "address",
+
+  state: "state",
+
+  country: "Location",
+  region: "Location",
+
+  locality: "Location",
+  district: "Location",
+  province: "Location",
+  address: "Location",
+  locationField: "Location",
+  locField: "Location",
+  placeField: "Location",
+  areaField: "Location",
+  cityField: "Location",
+  townField: "Location",
+  stateField: "Location",
+  countryField: "Location",
+  regionField: "Location",
+  localityField: "Location",
+  districtField: "Location",
+  provinceField: "Location",
+  addressField: "Location",
+
+  email: "email",
+  e_mail: "email",
+  eMail: "email",
+  emailAddress: "email",
+  email_address: "email",
+  emailField: "email",
+  e_mailField: "email",
+  eMailField: "email",
+  emailAddressField: "email",
+  email_addressField: "email",
+  emailID: "email",
+  e_mailID: "email",
+  eMailID: "email",
+  emailAddressID: "email",
+  email_addressID: "email",
+};
+
+const mapDetailRegex = {
+  firstName:
+    /first[_ ]?name|firstname|in[_-]?firstname|[a-z]*f[a-z]*[_]*name[a-z]*[_]*/gi,
+  middleName: /(^|[^a-zA-Z])middleName($|[^a-zA-Z])/gi,
+  lastName: /(^|[^a-zA-Z])lastName($|[^a-zA-Z])/gi,
+  fullName:
+    /name|full[_ ]?name|given[_ ]?name|user[_ ]?name|display[_ ]?name/gi,
+  preferredName: /(^|[^a-zA-Z])preferredName($|[^a-zA-Z])/gi,
+  phoneNumber:
+    /(^|[^a-zA-Z])Phone Number($|[^a-zA-Z])|($|[^a-zA-Z])phone($|[^a-zA-Z])/gi,
+  email:
+    /email|e[_]?mail|emailaddress|email[_ ]?address|email[_]?field|e[_]?mail[_]?field|emailid|e[_]?mail[_]?id|emailaddressid|email[_]?address[_]?id/gi,
+  phoneAlternativeNumber:
+    /(^|[^a-zA-Z])phone($|[^a-zA-Z])Alternative($|[^a-zA-Z])Number($|[^a-zA-Z])/gi,
+  code: /(^|[^a-zA-Z])code($|[^a-zA-Z])/gi,
+  DoB: /(^|[^a-zA-Z])DoB($|[^a-zA-Z])/gi,
+  address1: /(^|[^a-zA-Z])address1($|[^a-zA-Z])/gi,
+  address2: /(^|[^a-zA-Z])address2($|[^a-zA-Z])/gi,
+  gender: /(^|[^a-zA-Z])gender($|[^a-zA-Z])/gi,
+  street: /(^|[^a-zA-Z])street($|[^a-zA-Z])/gi,
+  houseNumber: /(^|[^a-zA-Z])houseNumber($|[^a-zA-Z])/gi,
+  zip: /(^|[^a-zA-Z])zip($|[^a-zA-Z])/gi,
+  city: /(^|[^a-zA-Z])city($|[^a-zA-Z])/gi,
+  state: /(^|[^a-zA-Z])state($|[^a-zA-Z])/gi,
+  country: /(^|[^a-zA-Z])country($|[^a-zA-Z])/gi,
+  apartment: /(^|[^a-zA-Z])apartment($|[^a-zA-Z])/gi,
+  floor: /(^|[^a-zA-Z])floor($|[^a-zA-Z])/gi,
+  building: /(^|[^a-zA-Z])building($|[^a-zA-Z])/gi,
+};
+
+const fillDetails = (data) => {
+  const userDetails = data.details;
+  console.log("userDetails: ", userDetails);
+  const inputFields = document.querySelectorAll("input");
+  // console.log("input fields", inputFields);
+  const inputDetails = [];
+  // const htmlCode = document.documentElement.outerHTML;
+  // console.log(htmlCode);
+
+  // content.js
+
+  const specificElements = document.querySelectorAll("div, p, label, input");
+  const elementsHTML = Array.from(specificElements).map(
+    (element) => element.outerHTML
+  );
+  console.log(elementsHTML);
+
+  inputFields.forEach((inputField) => {
+    const fieldDetails = {
+      type: inputField.type,
+      name: inputField.name,
+      value: inputField.value,
+      id: inputField.id,
+      placeholder: inputField.placeholder,
+      // Add more details as needed (e.g., id, class, etc.)
+    };
+    inputDetails.push(fieldDetails);
+
+    Object.keys(mapDetailRegex).forEach((key) => {
+      const pattern = mapDetailRegex[key];
+      // console.log("pattern",pattern);
+      // console.log("key",key)
+      if (
+        pattern.test(inputField.name) ||
+        pattern.test(inputField.id) ||
+        pattern.test(inputField.placeholder)
+      ) {
+        console.log("value", userDetails[key]);
+        inputField.value = userDetails[key];
+      } else if (inputField.id) {
+        const correspondingLabel = document.querySelector(
+          `label[for="${inputField.id}"]`
+        );
+        // console.log("id",inputField.id,"label", correspondingLabel)
+        const labelText = correspondingLabel.textContent.trim();
+        // Log the text content of the label
+        console.log("label", labelText);
+        if (pattern.test(labelText)) {
+          console.log("value", userDetails[key]);
+          inputField.value = userDetails[key];
+        }
+      }
+      // console.log("input fields", inputFields);
+      // console.log("inputDetails", inputDetails);
+      // if (
+      //   mapDetails[inputField.name] != undefined ||
+      //   mapDetails[inputField.id] != undefined ||
+      //   mapDetails[inputField.placeholder] != undefined
+      // ) {
+      //   inputField.value = data[mapDetails[inputField.name]];
+      // }
+    });
+  });
+  console.log("input Details", inputDetails);
+
+  // Handle Input Fields
+  // const nameField = document.querySelector(
+  //   'input[name*="name"], input[id*="name"], input[placeholder*="name"]'
+  // );
+  // const fnameField = document.querySelector(
+  //   'input[name*="First Name"],input[name*="First Name"],input[name*="First name"], input[name*="first name"] input[id*="first name"], input[placeholder*="First Name"]'
+  // );
+  // const lnameField = document.querySelector(
+  //   'input[name*="name"], input[id*="name"], input[placeholder*="name"]'
+  // );
+  // const emailField = document.querySelector(
+  //   'input[type*="mail"], input[name*="mail"], input[id*="mail"], input[placeholder*="mail"], input[data-automation-id*="mail"]'
+  // );
+  // const phoneField = document.querySelector(
+  //   'input[type="tel"], input[name="phone"], input[id*="phone"], input[placeholder*="phone"]'
+  // );
+  // const passwordField = document.querySelector(
+  //   'input[type="password"], input[name="password"], input[id*="password"], input[placeholder*="password"]'
+  // );
+  // const verifypasswordField = document.querySelector(
+  //   'input[type="password"], input[name="password"], input[id*="password"], input[placeholder*="password"]'
+  // );
+  // const nameFields = document.querySelectorAll(
+  //   'input[name*="name"], input[id*="name"], input[placeholder*="name"]'
+  // );
+
+  // const nameFields = document.querySelectorAll('input[name*="name"], input[id*="name"], input[placeholder*="name"]');
+  // console.log("nameFields", nameFields[0]);
+  // console.log("nameField", nameField);
+  // console.log("email", emailField);
+  // console.log("first name", fnameField);
+  // nameFields.forEach(function (field) {
+  //   // Your logic for each field here
+  //   console.log(field); // For instance, this would log the value of each input field
+  // });
+
+  // if (nameField) nameField[0] = personDetails.name;
+  if (inputFields) inputDetails[0].value = personDetails.name;
+  // if (emailField) emailField.value = personDetails.email;
+  // if (phoneField) phoneField.value = personDetails.phone;
+  // if (passwordField) passwordField.value = personDetails.password;
+  // if (verifypasswordField) verifypasswordField.value = personDetails.password;
+
+  //checkbox
+  // const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  // checkboxes.forEach(checkbox => {
+  //     // checkbox.checked = true;
+  // });
+
+  // Handle Dropdowns related to location
+  // const locationSelectors = ['Location*', 'country', 'place', 'location*', 'location'];
+
+  // document.querySelectorAll('select').forEach(menu => {
+  //     let isLocationSelect = locationSelectors.some(sel =>
+  //         menu.name.toLowerCase().includes(sel) ||
+  //         (menu.id && menu.id.toLowerCase().includes(sel)) ||
+  //         (menu.previousElementSibling && menu.previousElementSibling.textContent.toLowerCase().includes(sel))
+  //     );
+
+  //     if (isLocationSelect) {
+  //         menu.querySelectorAll('option').forEach(option => {
+  //             const optionValue = option.textContent.trim().toLowerCase();
+  //             if (['sofia', 'germany', 'Sofia'].includes(optionValue)) {
+  //                 option.selected = true;
+  //             }
+  //         });
+  //     }
+  // });
+
+  // if (cvField) {
+  //     const cvURL = chrome.runtime.getURL('my-cv.pdf');
+  //     fetch(cvURL)
+  //         .then(resp => resp.blob())
+  //         .then(blob => {
+  //             const file = new File([blob], 'my-cv.pdf', { type: 'application/pdf' });
+  //             const dt = new DataTransfer();
+  //             dt.items.add(file);
+  //              // cvField.files = dt.files;
+  //         });
+  // }
+
+  //     };
+
+  // Find the input field for CV uploads using attributes
+  // const cvField = document.querySelector('input[type="file"][name="cv"]');
+
+  // if (cvField) {
+  //     const cvURL = chrome.runtime.getURL('my-cv.pdf');
+  //     fetch(cvURL)
+  //         .then(resp => resp.blob())
+  //         .then(blob => {
+  //             const file = new File([blob], 'my-cv.pdf', { type: 'application/pdf' });
+  //             const dt = new DataTransfer();
+  //             dt.items.add(file);
+  //             // cvField.files = dt.files;
+  //         });
+
+  //contextMenu
+
+  let lastClickedElement = null;
+
+  document.addEventListener('mousedown', function(event){
+      if(event.button === 2) { // Right mouse button
+          lastClickedElement = event.target;
+          console.log('lastClickedElement', lastClickedElement);
+      }
+  }, true);
+
+  // chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  //     if (message.action === "uploadDocument") {
+  //         const fileInput = lastClickedElement;
+  //         if (fileInput && fileInput.tagName.toLowerCase() === 'input' && fileInput.type === 'file') {
+  //             const documentURL = chrome.runtime.getURL(`${message.documentType}.pdf`);
+  //             console.log("Generated URL for the document:", documentURL); // Debugging
+
+  //             fetch(documentURL)
+  //                 .then(resp => {
+  //                     if (!resp.ok) throw new Error('Network response was not ok');
+  //                     return resp.blob();
+  //                 })
+  //                 .then(blob => {
+  //                     const file = new File([blob], `${message.documentType}.pdf`, { type: 'application/pdf' });
+  //                     const dt = new DataTransfer();
+  //                     dt.items.add(file);
+  //                     fileInput.files = dt.files;
+  //                 })
+  //                 .catch(error => {
+  //                     console.error("Error fetching the document:", error); // Debugging
+  //                 });
+  //         }
+  //     }
+  // });
+};
